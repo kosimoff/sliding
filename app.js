@@ -815,9 +815,9 @@ var render = function() {
       [
         _c("rect", {
           staticStyle: {
-            fill: "rgb(255,125,0)",
+            fill: "#f2f2f2",
             "stroke-width": "1",
-            stroke: "green"
+            stroke: "black"
           },
           attrs: { width: _vm.scaled["width"], height: _vm.scaled["fixHeight"] }
         })
