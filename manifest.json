@@ -1,6 +1,6 @@
 {
-  "short_name": "Project Name",
-  "name": "Project Name",
+  "short_name": "Sliding",
+  "name": "Sliding",
   "icons": [
     {
       "src": "images/android-icon-36x36.png",
@@ -39,7 +39,7 @@
       "density": "4.0"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "sliding/index.html",
   "background_color": "#f7fafc",
   "theme_color": "#326787",
   "display": "standalone"
