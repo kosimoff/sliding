@@ -132,6 +132,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Application",
   props: [],
@@ -178,26 +180,18 @@ __webpack_require__.r(__webpack_exports__);
   calculated: {},
   methods: {
     calculate: function calculate() {
+      console.log(this.scale);
+      this.original['fixWidth'] = (this.original['width'] * 1 + this.original['stack'] - this.original['handle'] * 1 + this.original['wall'] * 1) / 2;
+      this.original['fixHeight'] = this.original['height'];
+      this.original['doorWidth'] = (this.original['width'] * 1 + this.original['stack'] + this.original['handle'] * 1 - this.original['wall'] * 1) / 2;
+      this.original['doorHeight'] = this.original['height'] - this.original['heightDifference'];
+      this.original['handleHoleY'] = (this.original['doorHeight'] - this.original['handleSize']) / 2;
+      this.original['circleHandleHoleY'] = this.original['doorHeight'] / 2;
+      this.open = this.original['width'] * 1 - (this.original['fixWidth'] + this.original['handle'] * 1);
+
       for (var x in this.original) {
         this.scaled[x] = this.original[x] / this.scale;
       }
-
-      this.scaled['fixWidth'] = (this.scaled['width'] + this.scaled['stack'] - this.scaled['handle'] + this.scaled['wall']) / 2;
-      this.original['fixWidth'] = this.scaled['fixWidth'] * this.scale;
-      this.scaled['fixHeight'] = this.scaled['height'];
-      this.original['fixHeight'] = this.scaled['fixHeight'] * this.scale;
-      this.scaled['doorWidth'] = (this.scaled['width'] + this.scaled['stack'] + this.scaled['handle'] - this.scaled['wall']) / 2;
-      this.original['doorWidth'] = this.scaled['doorWidth'] * this.scale;
-      this.scaled['doorHeight'] = this.scaled['height'] - this.scaled['heightDifference'];
-      this.original['doorHeight'] = this.scaled['doorHeight'] * this.scale;
-      this.scaled['handleHoleY'] = (this.scaled['doorHeight'] - this.scaled['handleSize']) / 2;
-      this.original['handleHoleY'] = this.scaled['handleHoleY'] * this.scale;
-      this.scaled['circleHandleHoleY'] = this.scaled['doorHeight'] / 2;
-      this.original['circleHandleHoleY'] = this.scaled['circleHandleHoleY'] * this.scale;
-      console.log(this.original['width'] + " - " + this.original['fixWidth'] + " + " + this.original['handle']);
-      console.log(this.original['width'] - (this.original['fixWidth'] + this.original['handle']));
-      this.open = this.original['width'] - (this.original['fixWidth'] + this.original['handle'] * 1);
-      console.log(this.open);
 
       if (this.status === 'Open') {
         this.margin = this.scaled['width'] - this.scaled['doorWidth'];
@@ -705,270 +699,310 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "p-5 relative" }, [
-    _c("div", {}, [
-      _vm._v("\n    Width: "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.original["width"],
-            expression: "original['width']"
-          }
-        ],
-        staticClass: "p-1 text-center border border-blue-700 rounded-lg",
-        attrs: { size: "4", type: "text" },
-        domProps: { value: _vm.original["width"] },
-        on: {
-          change: function($event) {
-            return _vm.calculate()
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.original, "width", $event.target.value)
-          }
-        }
-      }),
-      _c("br"),
-      _vm._v("\n    Handle: "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.original["handle"],
-            expression: "original['handle']"
-          }
-        ],
-        staticClass: "p-1 text-center mt-1 border border-blue-700 rounded-lg",
-        attrs: { size: "4", type: "text" },
-        domProps: { value: _vm.original["handle"] },
-        on: {
-          change: function($event) {
-            return _vm.calculate()
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.original, "handle", $event.target.value)
-          }
-        }
-      }),
-      _c("br"),
-      _vm._v("\n    Wall: "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.original["wall"],
-            expression: "original['wall']"
-          }
-        ],
-        staticClass: "p-1 mt-1 text-center border border-blue-700 rounded-lg",
-        attrs: { size: "4", type: "text" },
-        domProps: { value: _vm.original["wall"] },
-        on: {
-          change: function($event) {
-            return _vm.calculate()
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.original, "wall", $event.target.value)
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("div", [_vm._v("Fixed: " + _vm._s(_vm.original["fixWidth"]))]),
-      _vm._v(" "),
-      _c("div", [_vm._v("Door: " + _vm._s(_vm.original["doorWidth"]))]),
-      _vm._v(" "),
-      _c("div", [_vm._v("Open: " + _vm._s(_vm.open))]),
-      _vm._v(" "),
-      _c(
-        "button",
+    _vm._v("\n\n  Width: "),
+    _c("input", {
+      directives: [
         {
-          staticClass:
-            "mb-1 py-1 px-2 bg-blue-700 hover:bg-blue-800 rounded-lg focus:outline-none text-white",
-          attrs: { type: "button", name: "button" },
-          on: {
-            click: function($event) {
-              return _vm.closeOpen()
-            }
-          }
+          name: "model",
+          rawName: "v-model",
+          value: _vm.original["width"],
+          expression: "original['width']"
+        }
+      ],
+      staticClass: "p-1 text-center border border-blue-700 rounded-lg",
+      attrs: { size: "4", type: "text" },
+      domProps: { value: _vm.original["width"] },
+      on: {
+        change: function($event) {
+          return _vm.calculate()
         },
-        [_vm._v(_vm._s(_vm.status))]
-      )
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.original, "width", $event.target.value)
+        }
+      }
+    }),
+    _vm._v("\n  Handle: "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.original["handle"],
+          expression: "original['handle']"
+        }
+      ],
+      staticClass: "p-1 text-center mt-1 border border-blue-700 rounded-lg",
+      attrs: { size: "4", type: "text" },
+      domProps: { value: _vm.original["handle"] },
+      on: {
+        change: function($event) {
+          return _vm.calculate()
+        },
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.original, "handle", $event.target.value)
+        }
+      }
+    }),
+    _c("br"),
+    _vm._v("\n  Wall: "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.original["wall"],
+          expression: "original['wall']"
+        }
+      ],
+      staticClass: "p-1 mt-1 text-center border border-blue-700 rounded-lg",
+      attrs: { size: "4", type: "text" },
+      domProps: { value: _vm.original["wall"] },
+      on: {
+        change: function($event) {
+          return _vm.calculate()
+        },
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.original, "wall", $event.target.value)
+        }
+      }
+    }),
+    _vm._v("\n  Scale:\n  "),
+    _c(
+      "button",
+      {
+        staticClass:
+          "px-2 bg-blue-700 hover:bg-blue-800 rounded-lg focus:outline-none text-white",
+        attrs: { type: "button", name: "button" },
+        on: {
+          click: function($event) {
+            _vm.scale != 1 ? _vm.scale-- : "", _vm.calculate()
+          }
+        }
+      },
+      [_vm._v("+")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass:
+          "px-2 bg-blue-700 hover:bg-blue-800 rounded-lg focus:outline-none text-white",
+        attrs: { type: "button", name: "button" },
+        on: {
+          click: function($event) {
+            _vm.scale++, _vm.calculate()
+          }
+        }
+      },
+      [_vm._v("-")]
+    ),
+    _c("br"),
+    _vm._v(" "),
+    _c("span", [_vm._v("Fixed: " + _vm._s(_vm.original["fixWidth"]))]),
+    _vm._v(" "),
+    _c("span", [_vm._v("Door: " + _vm._s(_vm.original["doorWidth"]))]),
+    _vm._v(" "),
+    _c("span", { staticClass: "disabled" }, [
+      _vm._v("Open: " + _vm._s(_vm.open))
     ]),
     _vm._v(" "),
     _c(
-      "svg",
+      "div",
       {
-        staticClass: "absolute",
-        attrs: { width: _vm.scaled["width"], height: 2500 }
+        on: {
+          click: function($event) {
+            return _vm.closeOpen()
+          }
+        }
       },
       [
-        _c("rect", {
-          staticStyle: {
-            fill: "#f2f2f2",
-            "stroke-width": "1",
-            stroke: "green"
+        _c(
+          "svg",
+          {
+            staticClass: "absolute",
+            attrs: {
+              width: _vm.scaled["width"],
+              height: _vm.scaled["fixHeight"]
+            }
           },
-          attrs: { width: _vm.scaled["width"], height: _vm.scaled["fixHeight"] }
-        })
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "svg",
-      {
-        staticClass: "absolute",
-        style: { marginLeft: _vm.margin },
-        attrs: { width: _vm.scaled["doorWidth"], height: "2500" }
-      },
-      [
-        _c("rect", {
-          staticStyle: {
-            fill: "transparent",
-            "stroke-width": "1",
-            stroke: "red"
-          },
-          attrs: {
-            width: _vm.scaled["doorWidth"],
-            height: _vm.scaled["doorHeight"]
-          }
-        }),
-        _vm._v(" "),
-        _c("circle", {
-          attrs: {
-            cx: _vm.scaled["doorWheelHoleX"],
-            cy: _vm.scaled["doorWheelHoleY"],
-            r: _vm.scaled["doorWheelHole"] / 2,
-            stroke: "red",
-            "stroke-width": "1",
-            fill: "transparent"
-          }
-        }),
-        _vm._v(" "),
-        _c("circle", {
-          attrs: {
-            cx: _vm.scaled["doorWidth"] - _vm.scaled["doorWheelHoleX"],
-            cy: _vm.scaled["doorWheelHoleY"],
-            r: _vm.scaled["doorWheelHole"] / 2,
-            stroke: "red",
-            "stroke-width": "1",
-            fill: "transparent"
-          }
-        }),
-        _vm._v(" "),
-        _c("circle", {
-          attrs: {
-            cx: _vm.scaled["doorWheelHoleX"],
-            cy: _vm.scaled["doorSkipHoleY"],
-            r: _vm.scaled["doorSkipHole"] / 2,
-            stroke: "red",
-            "stroke-width": "1",
-            fill: "transparent"
-          }
-        }),
-        _vm._v(" "),
-        _c("circle", {
-          attrs: {
-            cx: _vm.scaled["doorWidth"] - _vm.scaled["doorWheelHoleX"],
-            cy: _vm.scaled["doorSkipHoleY"],
-            r: _vm.scaled["doorSkipHole"] / 2,
-            stroke: "red",
-            "stroke-width": "1",
-            fill: "transparent"
-          }
-        }),
-        _vm._v(" "),
-        _vm.original["handle"] > 0
-          ? _c("circle", {
+          [
+            _c("rect", {
+              staticStyle: {
+                fill: "#f2f2f2",
+                "stroke-width": "1",
+                stroke: "green"
+              },
               attrs: {
-                cx: _vm.scaled["doorWidth"] - _vm.scaled["handleHoleX"],
-                cy: _vm.scaled["handleHoleY"],
-                r: _vm.scaled["handleHole"] / 2,
+                width: _vm.scaled["width"],
+                height: _vm.scaled["fixHeight"]
+              }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "svg",
+          {
+            staticClass: "absolute",
+            style: { marginLeft: _vm.margin },
+            attrs: {
+              width: _vm.scaled["doorWidth"],
+              height: _vm.scaled["fixHeight"] + 20
+            }
+          },
+          [
+            _c("rect", {
+              staticStyle: {
+                fill: "transparent",
+                "stroke-width": "1",
+                stroke: "red"
+              },
+              attrs: {
+                width: _vm.scaled["doorWidth"],
+                height: _vm.scaled["doorHeight"]
+              }
+            }),
+            _vm._v(" "),
+            _c("circle", {
+              attrs: {
+                cx: _vm.scaled["doorWheelHoleX"],
+                cy: _vm.scaled["doorWheelHoleY"],
+                r: _vm.scaled["doorWheelHole"] / 2,
                 stroke: "red",
                 "stroke-width": "1",
                 fill: "transparent"
               }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.original["handle"] > 0
-          ? _c("circle", {
+            }),
+            _vm._v(" "),
+            _c("circle", {
               attrs: {
-                cx: _vm.scaled["doorWidth"] - _vm.scaled["handleHoleX"],
-                cy: _vm.scaled["handleHoleY"] + _vm.scaled["handleSize"],
-                r: _vm.scaled["handleHole"] / 2,
+                cx: _vm.scaled["doorWidth"] - _vm.scaled["doorWheelHoleX"],
+                cy: _vm.scaled["doorWheelHoleY"],
+                r: _vm.scaled["doorWheelHole"] / 2,
                 stroke: "red",
                 "stroke-width": "1",
                 fill: "transparent"
               }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.original["handle"] == 0
-          ? _c("circle", {
+            }),
+            _vm._v(" "),
+            _c("circle", {
               attrs: {
-                cx: _vm.scaled["doorWidth"] - _vm.scaled["circleHandleHoleX"],
-                cy: _vm.scaled["circleHandleHoleY"],
-                r: _vm.scaled["circleHandleHole"] / 2,
+                cx: _vm.scaled["doorWheelHoleX"],
+                cy: _vm.scaled["doorSkipHoleY"],
+                r: _vm.scaled["doorSkipHole"] / 2,
                 stroke: "red",
                 "stroke-width": "1",
                 fill: "transparent"
               }
-            })
-          : _vm._e()
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "svg",
-      {
-        staticClass: "absolute",
-        attrs: { width: _vm.scaled["fixWidth"], height: "2500" }
-      },
-      [
-        _c("rect", {
-          staticStyle: {
-            fill: "transparent",
-            "stroke-width": "1",
-            stroke: "black"
+            }),
+            _vm._v(" "),
+            _c("circle", {
+              attrs: {
+                cx: _vm.scaled["doorWidth"] - _vm.scaled["doorWheelHoleX"],
+                cy: _vm.scaled["doorSkipHoleY"],
+                r: _vm.scaled["doorSkipHole"] / 2,
+                stroke: "red",
+                "stroke-width": "1",
+                fill: "transparent"
+              }
+            }),
+            _vm._v(" "),
+            _vm.original["handle"] > 0
+              ? _c("circle", {
+                  attrs: {
+                    cx: _vm.scaled["doorWidth"] - _vm.scaled["handleHoleX"],
+                    cy: _vm.scaled["handleHoleY"],
+                    r: _vm.scaled["handleHole"] / 2,
+                    stroke: "red",
+                    "stroke-width": "1",
+                    fill: "transparent"
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.original["handle"] > 0
+              ? _c("circle", {
+                  attrs: {
+                    cx: _vm.scaled["doorWidth"] - _vm.scaled["handleHoleX"],
+                    cy: _vm.scaled["handleHoleY"] + _vm.scaled["handleSize"],
+                    r: _vm.scaled["handleHole"] / 2,
+                    stroke: "red",
+                    "stroke-width": "1",
+                    fill: "transparent"
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.original["handle"] == 0
+              ? _c("circle", {
+                  attrs: {
+                    cx:
+                      _vm.scaled["doorWidth"] - _vm.scaled["circleHandleHoleX"],
+                    cy: _vm.scaled["circleHandleHoleY"],
+                    r: _vm.scaled["circleHandleHole"] / 2,
+                    stroke: "red",
+                    "stroke-width": "1",
+                    fill: "transparent"
+                  }
+                })
+              : _vm._e()
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "svg",
+          {
+            staticClass: "absolute",
+            attrs: {
+              width: _vm.scaled["fixWidth"],
+              height: _vm.scaled["fixHeight"]
+            }
           },
-          attrs: {
-            width: _vm.scaled["fixWidth"],
-            height: _vm.scaled["fixHeight"]
-          }
-        }),
-        _vm._v(" "),
-        _c("circle", {
-          attrs: {
-            cx: _vm.scaled["fixHoleX"],
-            cy: _vm.scaled["fixHoleY"],
-            r: _vm.scaled["fixHole"] / 2,
-            stroke: "black",
-            "stroke-width": "1",
-            fill: "transparent"
-          }
-        }),
-        _vm._v(" "),
-        _c("circle", {
-          attrs: {
-            cx: _vm.scaled["fixWidth"] - _vm.scaled["fixHoleX"],
-            cy: _vm.scaled["fixHoleY"],
-            r: _vm.scaled["fixHole"] / 2,
-            stroke: "black",
-            "stroke-width": "1",
-            fill: "transparent"
-          }
-        })
+          [
+            _c("rect", {
+              staticStyle: {
+                fill: "transparent",
+                "stroke-width": "1",
+                stroke: "black"
+              },
+              attrs: {
+                width: _vm.scaled["fixWidth"],
+                height: _vm.scaled["fixHeight"]
+              }
+            }),
+            _vm._v(" "),
+            _c("circle", {
+              attrs: {
+                cx: _vm.scaled["fixHoleX"],
+                cy: _vm.scaled["fixHoleY"],
+                r: _vm.scaled["fixHole"] / 2,
+                stroke: "black",
+                "stroke-width": "1",
+                fill: "transparent"
+              }
+            }),
+            _vm._v(" "),
+            _c("circle", {
+              attrs: {
+                cx: _vm.scaled["fixWidth"] - _vm.scaled["fixHoleX"],
+                cy: _vm.scaled["fixHoleY"],
+                r: _vm.scaled["fixHole"] / 2,
+                stroke: "black",
+                "stroke-width": "1",
+                fill: "transparent"
+              }
+            })
+          ]
+        )
       ]
     )
   ])
